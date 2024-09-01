@@ -8,4 +8,5 @@ android {
 }
 dependencies{
     implementation(libs.image.coil.compose)
+    implementation(libs.androidx.core.i18n)
 }

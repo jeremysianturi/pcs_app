@@ -14,10 +14,13 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -48,9 +51,10 @@ fun UserListScreen(
     onUserItemClick: (String) -> Unit,
     onRefreshUserList: (UserListUiAction) -> Unit
 ) {
+
     ScaffoldTopAppbar(
         title = "User List",
-        containerColor = MaterialTheme.colorScheme.primary
+        containerColor = Color.Black
     ) {
         val modifier = Modifier.padding(it)
         Box(
@@ -101,7 +105,7 @@ private fun UserListItem(
             .clip(RoundedCornerShape(8.dp))
             .padding(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = Color.Gray,
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
@@ -122,7 +126,7 @@ private fun UserListItem(
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(text = userItem.name.orEmpty(), style = MaterialTheme.typography.bodyMedium)
-                Text(text = userItem.country.orEmpty(), style = MaterialTheme.typography.bodyMedium)
+                Text(text = userItem.createdAt.orEmpty(), style = MaterialTheme.typography.bodyMedium)
             }
         }
     }

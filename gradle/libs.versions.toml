@@ -66,6 +66,7 @@ espresso = "3.5.1"
 org-jetbrains-kotlin-android = "1.9.0"
 junitKtx = "1.2.1"
 monitor = "1.7.2"
+coreI18n = "1.0.0-alpha01"
 
 [bundles]
 network = ["retrofit2.core","retrofit2.rx3adapter","retrofit2.gsonconverter","gson","okhHttp3.core","okhHttp3.interceptor","kotlinx-coroutines-android"]
@@ -177,6 +178,7 @@ firebase-crashlytics-gradlePlugin = { group = "com.google.firebase", name = "fir
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
+androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version.ref = "coreI18n" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
