@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.google.gson.Gson
 import com.pcs.designsystem.component.ScaffoldTopAppbar
@@ -74,8 +75,8 @@ fun UserListScreen(
                 }
                 is UserListUiState.HasUserList -> {
                     LazyColumn(
-                        modifier = Modifier.padding(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        modifier = Modifier.padding(4.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         items(items = userListUiSate.userList) { userItem ->
                             UserListItem(
@@ -112,16 +113,16 @@ private fun UserListItem(
         )
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Timber.tag("UserListScreen").d("avatar value => %s", userItem.avatar)
-            Image(
-                painter = rememberAsyncImagePainter(model = userItem.avatar),
+            AsyncImage(
+                model = userItem.avatar,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(16.dp))
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {

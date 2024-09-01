@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.pcs.designsystem.component.ScaffoldTopAppbar
 import com.pcs.entity.UserItemEntity
@@ -68,8 +69,8 @@ private fun ProfileContentView(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = rememberAsyncImagePainter(model = data.avatar),
+        AsyncImage(
+            model = data.avatar,
             contentDescription = null,
             modifier = Modifier
                 .size(100.dp)
@@ -95,26 +96,42 @@ private fun ProfileContentView(
         Row(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text(text = data.country.orEmpty(), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-                Text(text = "Country", color = Color.Gray)
-            }
 
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = data.addressNo.orEmpty(), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-                Text(text = "Address", color = Color.Gray)
-            }
+                // Country
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Country: ", color = Color.Gray)
+                    Text(
+                        text = data.country.orEmpty(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
 
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = data.street.orEmpty(), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-                Text(text = "Street", color = Color.Gray)
+                // Address
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Address: ", color = Color.Gray)
+                    Text(
+                        text = data.addressNo.orEmpty(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+
+                // Street
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Street: ", color = Color.Gray)
+                    Text(
+                        text = data.street.orEmpty(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
         }
     }
