@@ -1,31 +1,24 @@
 package com.pcs.userlist
 
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import com.google.gson.Gson
 import com.pcs.designsystem.component.ScaffoldTopAppbar
 import com.pcs.entity.UserItemEntity
@@ -61,7 +54,14 @@ fun UserListScreen(
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            Color(0xFF1E3C72), // Dark Blue
+                            Color(0xFF2A5298)  // Lighter Blue
+                        )
+                    )
+                ),
             contentAlignment = Alignment.Center
         ) {
             when (userListUiSate) {
@@ -75,8 +75,8 @@ fun UserListScreen(
                 }
                 is UserListUiState.HasUserList -> {
                     LazyColumn(
-                        modifier = Modifier.padding(4.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                        modifier = Modifier.padding(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(items = userListUiSate.userList) { userItem ->
                             UserListItem(
@@ -103,31 +103,55 @@ private fun UserListItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onItemClick(Gson().toJson(userItem)) }
-            .clip(RoundedCornerShape(8.dp))
-            .padding(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.Gray,
-        ),
+            .padding(8.dp)
+            .clip(RoundedCornerShape(16.dp)),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
+            defaultElevation = 8.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent // Set to transparent to show gradient
         )
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Box(
+            modifier = Modifier
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            Color(0xFFB0E0E6), // Light Blue
+                            Color(0xFF4682B4)  // Steel Blue
+                        )
+                    )
+                )
+                .padding(16.dp)
         ) {
-            Timber.tag("UserListScreen").d("avatar value => %s", userItem.avatar)
-            AsyncImage(
-                model = userItem.avatar,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(16.dp))
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(text = userItem.name.orEmpty(), style = MaterialTheme.typography.bodyMedium)
-                Text(text = userItem.createdAt.orEmpty(), style = MaterialTheme.typography.bodyMedium)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Timber.tag("UserListScreen").d("avatar value => %s", userItem.avatar)
+                AsyncImage(
+                    model = userItem.avatar,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(80.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Text(
+                        text = userItem.name.orEmpty(),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = userItem.createdAt.orEmpty(),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.White.copy(alpha = 0.7f)
+                    )
+                }
             }
         }
     }
